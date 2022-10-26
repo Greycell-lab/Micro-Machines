@@ -29,7 +29,7 @@ namespace Micro_Machines
         List<Rectangle> itemstodestroy = new List<Rectangle>();
         Random rnd = new Random();
         bool carLeft, carRight;
-        int carLimit = 0;
+        int carLimit = 0, enemySpeed = 10;
         double timer = 0.0;
 
         public MainWindow()
@@ -76,7 +76,10 @@ namespace Micro_Machines
         }
         void gameEngine(object sender, EventArgs e)
         {
+            if (timer >= 10) enemySpeed = 15;
+            if (timer >= 20) enemySpeed = 20;
             timeLabel.Content = "Time: " + String.Format("{0:0.00}", timer);
+
             timer += 0.025;
             Rect playerHitbox = new Rect(Canvas.GetLeft(car), Canvas.GetTop(car), car.Width, car.Height);
             if(carLimit <=0)
@@ -89,7 +92,7 @@ namespace Micro_Machines
                     Width = 50,
                     Height = 75,
                     Fill = carEnemyImage                    
-                };          
+                };
                 Canvas.SetLeft(carE, rnd.Next(10, 275));
                 Canvas.SetTop(carE, -100);
                 myCanvas.Children.Add(carE);
@@ -126,7 +129,7 @@ namespace Micro_Machines
                     if (Canvas.GetTop(r) <= 500)
                     {
                         
-                        Canvas.SetTop(r, Canvas.GetTop(r) + 10);                        
+                        Canvas.SetTop(r, Canvas.GetTop(r) + enemySpeed);                        
                     }
                     Rect enemyHitbox = new Rect(Canvas.GetLeft(r), Canvas.GetTop(r), r.Width, r.Height);
                     if(enemyHitbox.IntersectsWith(playerHitbox))
