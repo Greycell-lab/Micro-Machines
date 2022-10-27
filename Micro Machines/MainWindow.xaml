@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Micro_Machines"
         mc:Ignorable="d"
-        Title="MainWindow" Height="470" Width="350">
+        Title="MainWindow" Height="470" Width="350" Left="815" Top="305">
     <Canvas Background="Gray" Name="myCanvas" KeyDown="onKeyDown" KeyUp="onKeyUp" Focusable="True">
         <Rectangle Canvas.ZIndex="2" Name ="car" Fill="Yellow" Height="75" Canvas.Left="148" Canvas.Top="349" Width="50" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <Rectangle Name="whiteFlick0" Canvas.ZIndex="1" Fill="White" Height="84" Canvas.Left="165" Stroke="Black" Width="16" HorizontalAlignment="Left" Canvas.Top="-114" VerticalAlignment="Center"/>

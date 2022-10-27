@@ -25,10 +25,11 @@ namespace Micro_Machines
     {
         ImageBrush carImage = new ImageBrush();
         ImageBrush carEnemy = new ImageBrush();
+        ImageBrush explosion = new ImageBrush();
         List<Rectangle> whiteStripes = new List<Rectangle>();
         List<Rectangle> itemstodestroy = new List<Rectangle>();
         Random rnd = new Random();
-        bool carLeft, carRight;
+        bool carLeft, carRight, stripesMoving = true, timeMoving = true;
         int carLimit = 0, enemySpeed = 10;
         double timer = 0.0;
 
@@ -38,10 +39,12 @@ namespace Micro_Machines
             InitializeComponent();
             carImage.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/carplayer.png"));
             car.Fill = carImage;
+            explosion.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/ex.png"));
             DispatcherTimer gameTime = new DispatcherTimer();
             gameTime.Interval = TimeSpan.FromMilliseconds(20);
             gameTime.Tick += gameEngine;
-            gameTime.Start();
+            
+            gameTime.Start();           
             myCanvas.Focus();
             whiteStripes.Add(whiteFlick0);
             whiteStripes.Add(whiteFlick1);
@@ -78,10 +81,10 @@ namespace Micro_Machines
         {
             if (timer >= 10) enemySpeed = 15;
             if (timer >= 20) enemySpeed = 20;
-            timeLabel.Content = "Time: " + String.Format("{0:0.00}", timer);
+            if(timeMoving) timeLabel.Content = "Time: " + String.Format("{0:0.00}", timer);            
 
             timer += 0.025;
-            Rect playerHitbox = new Rect(Canvas.GetLeft(car), Canvas.GetTop(car), car.Width, car.Height);
+            Rect playerHitbox = new Rect(Canvas.GetLeft(car) + 10, Canvas.GetTop(car) + 10, car.Width - 20, car.Height - 20);
             if(carLimit <=0)
             {
                 ImageBrush carEnemyImage = new ImageBrush();
@@ -114,12 +117,15 @@ namespace Micro_Machines
                     Canvas.SetLeft(car, Canvas.GetLeft(car) + 5);
                 }
             }
-            foreach(var r in whiteStripes)
+            if (stripesMoving)
             {
-                Canvas.SetTop(r, Canvas.GetTop(r) + 5);
-                if(Canvas.GetTop(r) > 450)
+                foreach (var r in whiteStripes)
                 {
-                    Canvas.SetTop(r, -150);
+                    Canvas.SetTop(r, Canvas.GetTop(r) + 5);
+                    if (Canvas.GetTop(r) > 450)
+                    {
+                        Canvas.SetTop(r, -150);
+                    }
                 }
             }
             foreach(var r in myCanvas.Children.OfType<Rectangle>())
@@ -132,12 +138,19 @@ namespace Micro_Machines
                         Canvas.SetTop(r, Canvas.GetTop(r) + enemySpeed);                        
                     }
                     Rect enemyHitbox = new Rect(Canvas.GetLeft(r), Canvas.GetTop(r), r.Width, r.Height);
-                    if(enemyHitbox.IntersectsWith(playerHitbox))
+                    if (enemyHitbox.IntersectsWith(playerHitbox))
                     {
-                        MessageBox.Show("Game Over");
+                        car.Width = 150;
+                        car.Height = 150;
+                        Canvas.SetTop(car, Canvas.GetTop(car) - 50);
+                        Canvas.SetLeft(car, Canvas.GetLeft(car) - 50);
+                        Canvas.SetZIndex(car, 3);
+                        car.Fill = explosion;
                         itemstodestroy.Add(r);
-                        Process.Start(Application.ResourceAssembly.Location);
-                        Application.Current.Shutdown();                        
+                        GameOver go = new GameOver();
+                        stripesMoving = false;
+                        timeMoving = false;
+                        go.Show();                                             
                     }
                     if (Canvas.GetTop(r) >= 500)
                     {
