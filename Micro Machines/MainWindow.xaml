@@ -13,7 +13,9 @@
         <Rectangle Name="whiteFlick2" Canvas.ZIndex="1" Fill="White" Height="84" Canvas.Left="165" Stroke="Black" Canvas.Top="129" Width="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <Rectangle Name="whiteFlick3" Canvas.ZIndex="1" Fill="White" Height="84" Canvas.Left="165" Stroke="Black" Canvas.Top="248" Width="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <Rectangle Name="whiteFlick4" Canvas.ZIndex="1"  Fill="White" Height="84" Canvas.Left="165" Stroke="Black" Canvas.Top="370" Width="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Name="timeLabel" Content="Time: " Canvas.Left="10" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Center" Width="80"/>
+        <Label Name="timeLabel" Content="Time: " Canvas.Left="10" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Center" Width="80" FontSize="14"/>
+        <Rectangle Panel.ZIndex="2" Name ="carE" Fill="Yellow" Height="75" Canvas.Left="249" Canvas.Top="-114" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Label Name="scoreLabel" Content="Score: " Canvas.Left="249" Canvas.Top="10" Width="80" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14"/>
 
     </Canvas>
 </Window>
